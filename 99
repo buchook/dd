@@ -73,7 +73,6 @@ apt-get install boxes
 cd
 rm -rf /root/.bashrc
 wget -O /root/.bashrc $source.bashrc
-wget -O /etc/motd $source/motd
 # install lolcat
 sudo apt-get -y install ruby
 sudo gem install lolcat
