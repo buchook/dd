@@ -23,7 +23,7 @@ vps="dg-network";
 #if [[ $vps = "dg-network" ]]; then
 	#source="http://"
 #else
-	source="http;//xhome.tech/Debian9"
+	source="http://xhome.tech/Debian9"
 #fi
 
 # go to root
