@@ -145,6 +145,35 @@ echo "/usr/sbin/nologin" >> /etc/shells
 service ssh restart
 service dropbear restart
 
+# upgrade to dropbear 2017
+cd
+apt-get install zlib1g-dev
+wget -q https://raw.githubusercontent.com/gidhanbagus/ndasmu/master/app/dropbear-2017.75.tar.bz2
+bzip2 -cd dropbear-2017.75.tar.bz2 | tar xvf -
+cd dropbear-2017.75
+./configure
+make && make install
+mv /usr/sbin/dropbear /usr/sbin/dropbear.old
+ln /usr/local/sbin/dropbear /usr/sbin/dropbear
+cd && rm -rf dropbear-2017.75 && rm -rf dropbear-2017.75.tar.bz2
+service dropbear restart
+
+# install vnstat gui
+cd /home/vps/public_html/
+wget -q https://raw.githubusercontent.com/gidhanbagus/raimu/master/repo/vnstat_php_frontend-1.5.1.tar.gz
+tar xf vnstat_php_frontend-1.5.1.tar.gz
+rm vnstat_php_frontend-1.5.1.tar.gz
+mv vnstat_php_frontend-1.5.1 vnstat
+cd vnstat
+sed -i "s/\$iface_list = array('eth0', 'sixxs');/\$iface_list = array('eth0');/g" config.php
+sed -i "s/\$language = 'nl';/\$language = 'en';/g" config.php
+sed -i 's/Internal/Internet/g' config.php
+sed -i '/SixXS IPv6/d' config.php
+cd
+
+# install fail2ban
+apt-get -y install fail2ban;service fail2ban restart
+
 # install squid3
 cd
 apt-get -y install squid3
